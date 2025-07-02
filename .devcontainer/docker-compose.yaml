@@ -1,0 +1,29 @@
+version: '3'
+services:
+  moveit2_service:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    image: yc-dlan/rt_ur_container
+    container_name: Rt_ur_container
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/tmp/.Xauthority
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - OMP_WAIT_POLICY=passive
+      - TERM=xterm-256color
+    volumes:
+    #  - /home/yc-dlan/.Xauthority:/tmp/.Xauthority
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./..:/home/yc-dlan/Rt_ur_control
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev:/dev
+    network_mode: host
+    pid: "host" # 添加 pid 命名空间共享
+    ipc: "host" # 添加 ipc 命名空间共享    
+    privileged: true
+    stdin_open: true
+    tty: true
+    user: "yc-dlan"
+    working_dir: "/home/yc-dlan/Rt_ur_control" # 指定默认工作目录
