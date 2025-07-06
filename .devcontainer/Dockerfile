@@ -36,7 +36,7 @@ RUN apt-get update \
     cmake \
     python3-colcon-common-extensions \
     python3-flake8 \
-     python3-rosdep \
+    python3-rosdep \
     python3-setuptools \
     python3-vcstool \
     wget \
@@ -58,8 +58,13 @@ RUN apt-get update && apt-get install -y \
     #UR机械臂驱动
     ros-humble-ur
     
-# 安装colcon构建系统
-RUN pip3 install -U colcon-common-extensions
+# 安装colcon构建系统及mixin配置
+RUN pip3 install -U colcon-common-extensions \
+    && apt-get install -y python3-colcon-mixin \
+    && if ! colcon mixin list | grep -q 'default'; then \
+         colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml; \
+       fi \
+    && colcon mixin update default
 
 #切回yc-dlan
 USER yc-dlan
