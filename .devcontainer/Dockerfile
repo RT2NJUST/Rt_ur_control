@@ -5,7 +5,10 @@ ARG USERNAME=yc-dlan
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-ENV DEBIAN_FRONTEND=noninteractive
+#安装相关包
+ARG ROS_DISTRO=humble
+
+WORKDIR /home/${USERNAME}/Rt_ur_control/packages
 
 # 创建用户组和用户
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -60,11 +63,29 @@ RUN apt-get update && apt-get install -y \
     
 # 安装colcon构建系统及mixin配置
 RUN pip3 install -U colcon-common-extensions \
-    && apt-get install -y python3-colcon-mixin \
-    && if ! colcon mixin list | grep -q 'default'; then \
-         colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml; \
-       fi \
-    && colcon mixin update default
+    && apt-get install -y python3-colcon-mixin 
+
+# 克隆并编译moveit2_tutorials
+RUN mkdir -p /home/${USERNAME}/Rt_ur_control/packages/ros_ws/src && \
+    cd /home/${USERNAME}/Rt_ur_control/packages/ros_ws/src && \
+    git clone -b $ROS_DISTRO https://github.com/moveit/moveit2_tutorials.git && \
+    vcs import --recursive < moveit2_tutorials/moveit2_tutorials.repos && \
+    cd .. && \
+    sudo apt remove -y ros-$ROS_DISTRO-moveit* && \
+    sudo apt update && \
+    rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y && \
+    bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && \
+    colcon build --symlink-install --mixin release compile-commands --executor sequential --parallel-workers 2"
+
+# 克隆并编译Universal_Robots_ROS2_Driver
+RUN cd /home/${USERNAME}/Rt_ur_control/packages/ros_ws/src && \
+    git clone -b $ROS_DISTRO https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver.git && \
+    vcs import --skip-existing --input Universal_Robots_ROS2_Driver/Universal_Robots_ROS2_Driver-not-released.${ROS_DISTRO}.repos && \
+    rosdep update && \
+    rosdep install --ignore-src --from-paths . -y && \
+    cd .. && \
+    bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && \
+    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
 #切回yc-dlan
 USER yc-dlan
