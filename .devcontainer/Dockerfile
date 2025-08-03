@@ -77,11 +77,9 @@ RUN pip3 install -U colcon-common-extensions \
     && apt-get install -y python3-colcon-mixin 
 
 #拉取开源镜像
-RUN mkdir -p /home/${USERNAME}/Rt_ur_control/src && \
-    cd /home/${USERNAME}/Rt_ur_control/src && \
-    git clone https://github.com/zitongbai/UR5e_Vision_Assemble.git \
-    cd .. \
-    colcon build --symlink-install
+RUN mkdir -p /home/${USERNAME}/packages && \
+    cd /home/${USERNAME}/packages && \
+    git clone https://github.com/zitongbai/UR5e_Vision_Assemble.git
 
 #切回yc-dlan
 USER yc-dlan
