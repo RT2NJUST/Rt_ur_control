@@ -54,38 +54,34 @@ RUN apt-get update \
 RUN apt-get update && apt-get install -y \
     ros-humble-desktop \
     ros-humble-moveit \
+    ros-humble-moveit* \
     #视觉处理包
     ros-humble-vision-opencv \
     #深度相机驱动
     ros-humble-realsense2-camera \
     #UR机械臂驱动
-    ros-humble-ur
+    ros-humble-ur \
+    #gazebo
+    gazebo \
+    #ros2 control
+    ros-humble-ros2-control \
+    ros-humble-ros2-controllers \
+    #image dependency
+    ros-humble-image-pipeline \
+    ros-humble-compressed-image-transport \
+    ros-humble-compressed-depth-image-transport \
+    ros-humble-vision-msgs 
     
 # 安装colcon构建系统及mixin配置
 RUN pip3 install -U colcon-common-extensions \
     && apt-get install -y python3-colcon-mixin 
 
-# 克隆并编译moveit2_tutorials
-RUN mkdir -p /home/${USERNAME}/Rt_ur_control/packages/ros_ws/src && \
-    cd /home/${USERNAME}/Rt_ur_control/packages/ros_ws/src && \
-    git clone -b $ROS_DISTRO https://github.com/moveit/moveit2_tutorials.git && \
-    vcs import --recursive < moveit2_tutorials/moveit2_tutorials.repos && \
-    cd .. && \
-    sudo apt remove -y ros-$ROS_DISTRO-moveit* && \
-    sudo apt update && \
-    rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y && \
-    bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && \
-    colcon build --symlink-install --mixin release compile-commands --executor sequential --parallel-workers 2"
-
-# 克隆并编译Universal_Robots_ROS2_Driver
-RUN cd /home/${USERNAME}/Rt_ur_control/packages/ros_ws/src && \
-    git clone -b $ROS_DISTRO https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver.git && \
-    vcs import --skip-existing --input Universal_Robots_ROS2_Driver/Universal_Robots_ROS2_Driver-not-released.${ROS_DISTRO}.repos && \
-    rosdep update && \
-    rosdep install --ignore-src --from-paths . -y && \
-    cd .. && \
-    bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && \
-    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
+#拉取开源镜像
+RUN mkdir -p /home/${USERNAME}/Rt_ur_control/src && \
+    cd /home/${USERNAME}/Rt_ur_control/src && \
+    git clone https://github.com/zitongbai/UR5e_Vision_Assemble.git \
+    cd .. \
+    colcon build --symlink-install
 
 #切回yc-dlan
 USER yc-dlan
