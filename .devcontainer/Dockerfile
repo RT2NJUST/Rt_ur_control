@@ -55,6 +55,11 @@ RUN apt-get update && apt-get install -y \
     ros-humble-desktop \
     ros-humble-moveit \
     ros-humble-moveit* \
+    #cmake相关依赖
+    ros-humble-ament-cmake \
+    ros-humble-ament-cmake-cpplint \
+    ros-humble-ament-cmake-clang-format \
+    ros-humble-ament-cmake-gtest \
     #视觉处理包
     ros-humble-vision-opencv \
     #深度相机驱动
@@ -66,20 +71,40 @@ RUN apt-get update && apt-get install -y \
     #ros2 control
     ros-humble-ros2-control \
     ros-humble-ros2-controllers \
+    ros-humble-moveit-servo \
+    ros-humble-gazebo-plugins \
+    ros-humble-gazebo-ros \
     #image dependency
     ros-humble-image-pipeline \
     ros-humble-compressed-image-transport \
     ros-humble-compressed-depth-image-transport \
     ros-humble-vision-msgs 
-    
+
+# 安装gazebo相关依赖
+RUN apt-get update && apt-get install -y \
+    lsb-release \
+    gnupg \
+    ignition-fortress && \
+    rm -rf /var/lib/apt/lists/*
+
+# 添加OSRF仓库的GPG密钥
+RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+
+# 添加OSRF仓库到源列表
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+
 # 安装colcon构建系统及mixin配置
 RUN pip3 install -U colcon-common-extensions \
     && apt-get install -y python3-colcon-mixin 
 
 #拉取开源镜像
-RUN mkdir -p /home/${USERNAME}/packages && \
-    cd /home/${USERNAME}/packages && \
-    git clone https://github.com/zitongbai/UR5e_Vision_Assemble.git
+RUN mkdir -p /home/${USERNAME}/packages/src && \
+    cd /home/${USERNAME}/packages/src && \
+    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git && \
+    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git && \
+    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver.git 
+    #cd .. && \
+    #colcon build --symlink-install
 
 #切回yc-dlan
 USER yc-dlan
