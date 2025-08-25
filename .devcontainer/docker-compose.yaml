@@ -1,6 +1,6 @@
 version: '3'
 services:
-  moveit2_service:
+  ur_service:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile

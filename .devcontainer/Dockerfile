@@ -98,13 +98,13 @@ RUN pip3 install -U colcon-common-extensions \
     && apt-get install -y python3-colcon-mixin 
 
 #拉取开源镜像
-RUN mkdir -p /home/${USERNAME}/packages/src && \
-    cd /home/${USERNAME}/packages/src && \
-    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git && \
-    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git && \
-    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver.git 
-    #cd .. && \
-    #colcon build --symlink-install
+#RUN mkdir -p /home/${USERNAME}/packages/src && \
+#    cd /home/${USERNAME}/packages/src && \
+#    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git && \
+#    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git && \
+#    git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver.git 
+#    #cd .. && \
+#    #colcon build --symlink-install
 
 #切回yc-dlan
 USER yc-dlan
