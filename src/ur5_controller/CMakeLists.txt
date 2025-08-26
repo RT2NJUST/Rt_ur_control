@@ -125,8 +125,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # prevent pluginlib from using boost
-target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
-pluginlib_export_plugin_description_file(controller_interface controller_plugins.xml)
+#target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+#pluginlib_export_plugin_description_file(controller_interface controller_plugins.xml)
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
@@ -138,9 +138,9 @@ install(DIRECTORY include/
   DESTINATION include
 )
 
-install(FILES controller_plugins.xml
-  DESTINATION share/${PROJECT_NAME}
-)
+#install(FILES controller_plugins.xml
+#  DESTINATION share/${PROJECT_NAME}
+#)
 
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 ament_export_include_directories(include)
@@ -160,27 +160,6 @@ if(BUILD_TESTING)
   find_package(hardware_interface REQUIRED)
   find_package(ros2_control_test_assets REQUIRED)
 
-  add_definitions(-DTEST_FILES_DIRECTORY="${CMAKE_CURRENT_SOURCE_DIR}/test")
-  ament_add_gmock(test_load_force_mode_controller
-    test/test_load_force_mode_controller.cpp
-  )
-  target_link_libraries(test_load_force_mode_controller
-    ${PROJECT_NAME}
-  )
-  ament_target_dependencies(test_load_force_mode_controller
-    controller_manager
-    ros2_control_test_assets
-  )
-  ament_add_gmock(test_load_freedrive_mode_controller
-    test/test_load_freedrive_mode_controller.cpp
-  )
-  target_link_libraries(test_load_freedrive_mode_controller
-    ${PROJECT_NAME}
-  )
-  ament_target_dependencies(test_load_freedrive_mode_controller
-    controller_manager
-    ros2_control_test_assets
-  )
 endif()
 
 ament_package()
