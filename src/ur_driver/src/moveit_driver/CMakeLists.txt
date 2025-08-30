@@ -4,7 +4,7 @@ project(moveit_driver)
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 
-install(DIRECTORY config launch rviz srdf urdf meshes
+install(DIRECTORY config launch rviz srdf meshes
   DESTINATION share/${PROJECT_NAME}
 )
 
