@@ -1,7 +1,7 @@
 controller_names:
   - scaled_joint_trajectory_controller
   - joint_trajectory_controller
-
+  - gripper_controller
 
 scaled_joint_trajectory_controller:
   action_ns: follow_joint_trajectory
@@ -27,3 +27,15 @@ joint_trajectory_controller:
     - wrist_1_joint
     - wrist_2_joint
     - wrist_3_joint
+
+
+gripper_controller:
+  action_ns: follow_joint_trajectory
+  type: FollowJointTrajectory
+  default: false
+  joints:
+    - finger_joint
+  constraints:
+    finger_joint:
+      goal: 0.01  # 目标位置容差
+      trajectory: 0.05  # 轨迹容差

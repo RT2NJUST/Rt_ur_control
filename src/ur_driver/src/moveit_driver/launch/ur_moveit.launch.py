@@ -270,7 +270,15 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
     )
 
-    nodes_to_start = [move_group_node, rviz_node, servo_node]
+    # Robot state publisher
+    robot_state_publisher_node = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[robot_description],
+    )
+
+    nodes_to_start = [move_group_node, rviz_node, servo_node, robot_state_publisher_node]
 
     return nodes_to_start
 

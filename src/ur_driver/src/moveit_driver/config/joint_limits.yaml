@@ -23,3 +23,11 @@ joint_limits:
   wrist_3_joint:
     has_acceleration_limits: true
     max_acceleration: 5.0
+  finger_joint:
+    has_velocity_limits: true
+    max_velocity: 0.5  # 夹爪速度限制
+    has_acceleration_limits: true
+    max_acceleration: 1.0  # 夹爪加速度限制
+    has_position_limits: true
+    min_position: 0.0  # 完全闭合
+    max_position: 0.8  # 完全打开

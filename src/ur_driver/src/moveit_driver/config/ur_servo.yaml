@@ -80,3 +80,16 @@ scene_collision_proximity_threshold: 0.02 # Start decelerating when a scene coll
 # Parameters for "stop_distance"-type collision checking
 collision_distance_safety_factor: 1000.0 # Must be >= 1. A large safety factor is recommended to account for latency
 min_allowable_collision_distance: 0.01 # Stop if a collision is closer than this [m]
+
+## gripper
+gripper_servo:
+  move_group_name: gripper
+  planning_frame: robotiq_arg2f_base_link
+  ee_frame_name: left_inner_finger_pad
+  robot_link_command_frame: robotiq_arg2f_base_link
+  command_out_topic: /gripper_position_controller/commands
+  joint_topic: /joint_states
+  scale:
+    joint: 0.005
+  publish_period: 0.01
+  incoming_command_timeout: 0.2

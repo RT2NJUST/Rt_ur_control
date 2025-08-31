@@ -57,10 +57,10 @@
   <xacro:include filename="$(find ur5_description)/urdf/robotiq_arg2f_85_model_macro.xacro" />
 
     <!-- 添加夹爪参数 -->
-  <xacro:arg name="use_gripper" default="false"/>
+  <xacro:arg name="use_gripper" default="true"/>
   <xacro:arg name="gripper_offset_x" default="0.0"/>
   <xacro:arg name="gripper_offset_y" default="0.0"/>
-  <xacro:arg name="gripper_offset_z" default="0.02"/>
+  <xacro:arg name="gripper_offset_z" default="0.0"/>
   <xacro:arg name="gripper_roll" default="0.0"/>
   <xacro:arg name="gripper_pitch" default="0.0"/>
   <xacro:arg name="gripper_yaw" default="0.0"/>
