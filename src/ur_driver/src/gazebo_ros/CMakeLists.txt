@@ -220,6 +220,6 @@ install(
 )
 
 install(DIRECTORY
-  launch worlds
+  launch worlds model
   DESTINATION share/${PROJECT_NAME}/
 )
