@@ -96,7 +96,8 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument(
-            'world', default_value=[FindPackageShare('gazebo_ros'), '/worlds/empty.world'],
+            #'world', default_value=[FindPackageShare('gazebo_ros'), '/worlds/empty.world'],
+            'world', default_value=[FindPackageShare('gazebo_ros'), '/worlds/ws_simulation.world'], #修改模型仿真环境
             description='Specify world file name. Defaults to an empty world.'
         ),
         DeclareLaunchArgument(
