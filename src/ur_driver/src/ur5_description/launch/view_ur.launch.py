@@ -108,7 +108,7 @@ def generate_launch_description():
     declared_arguments.append(
     DeclareLaunchArgument(
         "use_gripper",
-        default_value="false",
+        default_value="true",
         description="Whether to include the Robotiq gripper model",
         )
     )
