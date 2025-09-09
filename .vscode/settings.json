@@ -1,0 +1,31 @@
+{
+    "ros.distro": "humble",
+    "python.autoComplete.extraPaths": [
+        "/home/yc-dlan/Rt_ur_control/install/ur_robot_driver/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/ur_moveit_config/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/robot_driver/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/moveit_driver/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/ur_dashboard_msgs/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/build/teleop_driver",
+        "/home/yc-dlan/Rt_ur_control/install/teleop_driver/lib/python3.10/site-packages",
+        "/home/yc-dlan/Rt_ur_control/build/python_pkg",
+        "/home/yc-dlan/Rt_ur_control/install/python_pkg/lib/python3.10/site-packages",
+        "/home/yc-dlan/Rt_ur_control/install/gazebo_ros/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/yc-dlan/Rt_ur_control/install/ur_robot_driver/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/ur_moveit_config/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/robot_driver/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/moveit_driver/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/install/ur_dashboard_msgs/local/lib/python3.10/dist-packages",
+        "/home/yc-dlan/Rt_ur_control/build/teleop_driver",
+        "/home/yc-dlan/Rt_ur_control/install/teleop_driver/lib/python3.10/site-packages",
+        "/home/yc-dlan/Rt_ur_control/build/python_pkg",
+        "/home/yc-dlan/Rt_ur_control/install/python_pkg/lib/python3.10/site-packages",
+        "/home/yc-dlan/Rt_ur_control/install/gazebo_ros/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

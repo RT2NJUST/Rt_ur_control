@@ -19,6 +19,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && usermod -aG sudo $USERNAME \
     && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && echo 'source /opt/ros/humble/setup.bash' >> /home/$USERNAME/.bashrc \
+    && chown -R $USERNAME:$USERNAME /home/$USERNAME \
     # 使新用户的 `.bashrc` 文件生效
     && chown $USERNAME:$USERNAME /home/$USERNAME/.bashrc
 
