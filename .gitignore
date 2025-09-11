@@ -13,3 +13,11 @@ metadata.yaml
 *.cpy
 *.zip
 *.mcap
+
+*.vc.db
+*.db
+.db-shm
+.vscode/
+.vscode/settings.json
+.vscode/browse.vc.db-wal
+.vscode/browse.vc.db-shm

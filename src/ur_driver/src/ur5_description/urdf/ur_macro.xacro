@@ -52,19 +52,8 @@
 
   <xacro:include filename="$(find ur5_description)/urdf/inc/ur_transmissions.xacro" />
   <xacro:include filename="$(find ur5_description)/urdf/inc/ur_common.xacro" />
-  
-  <!-- Quoting a new gripper model -->
+
   <xacro:include filename="$(find ur5_description)/urdf/robotiq_arg2f_85_model_macro.xacro" />
-
-    <!-- 添加夹爪参数 -->
-  <xacro:arg name="use_gripper" default="true"/>
-  <xacro:arg name="gripper_offset_x" default="0.0"/>
-  <xacro:arg name="gripper_offset_y" default="0.0"/>
-  <xacro:arg name="gripper_offset_z" default="0.0"/>
-  <xacro:arg name="gripper_roll" default="0.0"/>
-  <xacro:arg name="gripper_pitch" default="0.0"/>
-  <xacro:arg name="gripper_yaw" default="0.0"/>
-
 
   <xacro:macro name="ur_robot" params="
     name
@@ -471,29 +460,24 @@
       <origin xyz="0 0 0" rpy="0 ${-pi/2.0} ${-pi/2.0}" />
     </joint>
 
+    <xacro:include filename="$(find ur5_description)/urdf/robotiq_arg2f_85_model_macro.xacro"/>
+    <xacro:robotiq_arg2f_85 prefix="${tf_prefix}"/>
+
+    <!-- 连接夹爪到 flange -->
+    <joint name="${tf_prefix}flange_to_gripper" type="fixed">
+      <parent link="${tf_prefix}flange"/>
+      <child link="${tf_prefix}robotiq_arg2f_base_link"/>
+      <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
+    </joint>
+
     <!-- ROS-Industrial 'tool0' frame - all-zeros tool frame -->
     <link name="${tf_prefix}tool0"/>
-    <joint name="${tf_prefix}flange-tool0" type="fixed">
+    <joint name="${tf_prefix}gripper-to-tool0" type="fixed">
       <!-- default toolframe - X+ left, Y+ up, Z+ front -->
       <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
-      <parent link="${tf_prefix}flange"/>
+      <parent link="${tf_prefix}left_inner_finger_pad"/>
       <child link="${tf_prefix}tool0"/>
     </joint>
-    
-    <!-- ============= 添加夹爪（有条件） ============= -->
-    <xacro:if value="$(arg use_gripper)">
-      <!-- Add Robotiq_85 Claw Model Connection -->
-      <joint name="${tf_prefix}gripper_base_joint" type="fixed">
-        <origin 
-          xyz="$(arg gripper_offset_x) $(arg gripper_offset_y) $(arg gripper_offset_z)" 
-          rpy="$(arg gripper_roll) $(arg gripper_pitch) $(arg gripper_yaw)"/>  
-        <parent link="${tf_prefix}tool0"/>  
-        <child link="${tf_prefix}robotiq_arg2f_base_link"/>  
-      </joint>
-      
-      <!-- Add Robotiq_85 Claw Body -->
-      <xacro:robotiq_arg2f_85 prefix="${tf_prefix}"/>
-    </xacro:if>
 
   </xacro:macro>
 </robot>
