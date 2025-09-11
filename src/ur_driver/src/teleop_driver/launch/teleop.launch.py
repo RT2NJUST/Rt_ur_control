@@ -40,11 +40,11 @@ def generate_launch_description():
 
 def launch_setup(context, *args, **kwargs):
 
-    moveit_launch = IncludeLaunchDescription(
+    gz_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
-                FindPackageShare("moveit_driver"),
-                "launch/ur_moveit.launch.py"
+                FindPackageShare("ur_simulation_gazebo"),
+                "launch/ur_sim_moveit.launch.py"
             ])
         ]),
         launch_arguments=[
@@ -74,6 +74,6 @@ def launch_setup(context, *args, **kwargs):
         }]  
     )
 
-    node_to_start = [teleop_node, moveit_launch, joy_node]
+    node_to_start = [teleop_node, gz_launch, joy_node]
 
     return node_to_start

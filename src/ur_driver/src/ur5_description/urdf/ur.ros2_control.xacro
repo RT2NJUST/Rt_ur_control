@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find ur5_description)/urdf/robotiq_arg2f_transmission.xacro" />
-  <xacro:robotiq_arg2f_transmission prefix="${tf_prefix}"/>
-  
   <xacro:macro name="ur_ros2_control" params="
     name
-    use_fake_hardware:=true fake_sensor_commands:=false
-    sim_gazebo:=true
+    use_fake_hardware:=false fake_sensor_commands:=false
+    sim_gazebo:=false
     sim_ignition:=false
     headless_mode:=false
     initial_positions:=${dict(shoulder_pan_joint=0.0,shoulder_lift_joint=-1.57,elbow_joint=0.0,wrist_1_joint=-1.57,wrist_2_joint=0.0,wrist_3_joint=0.0)}
@@ -129,7 +126,7 @@
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
       </joint>
-      
+
       <xacro:unless value="${sim_gazebo or sim_ignition}">
         <sensor name="${tf_prefix}tcp_fts_sensor">
           <state_interface name="force.x"/>

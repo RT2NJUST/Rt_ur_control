@@ -84,7 +84,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
-            default_value="ur5_description",
+            default_value="ur_description",
             description="Description package with robot URDF/XACRO files. Usually the argument "
             "is not set, it enables use of a custom description.",
         )
@@ -105,67 +105,12 @@ def generate_launch_description():
             "have to be updated.",
         )
     )
-    declared_arguments.append(
-    DeclareLaunchArgument(
-        "use_gripper",
-        default_value="true",
-        description="Whether to include the Robotiq gripper model",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "gripper_offset_x",
-            default_value="0.0",
-            description="X offset for gripper mounting position",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "gripper_offset_y",
-            default_value="0.0",
-            description="Y offset for gripper mounting position",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "gripper_offset_z",
-            default_value="0.0",
-            description="Z offset for gripper mounting position",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "gripper_roll",
-            default_value="0.0",
-            description="Roll gripper mounting position",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "gripper_pitch",
-            default_value="0.0",
-            description="Pitch gripper mounting position",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "gripper_yaw",
-            default_value="0.0",
-            description="Yaw gripper mounting position",
-        )
-    )
+
     # Initialize Arguments
     ur_type = LaunchConfiguration("ur_type")
     safety_limits = LaunchConfiguration("safety_limits")
     safety_pos_margin = LaunchConfiguration("safety_pos_margin")
     safety_k_position = LaunchConfiguration("safety_k_position")
-    use_gripper = LaunchConfiguration("use_gripper")
-    gripper_offset_x = LaunchConfiguration("gripper_offset_x")
-    gripper_offset_y = LaunchConfiguration("gripper_offset_y")
-    gripper_offset_z = LaunchConfiguration("gripper_offset_z")
-    gripper_roll = LaunchConfiguration("gripper_roll")
-    gripper_pitch = LaunchConfiguration("gripper_pitch")
-    gripper_yaw = LaunchConfiguration("gripper_yaw")
     # General arguments
     description_package = LaunchConfiguration("description_package")
     description_file = LaunchConfiguration("description_file")
@@ -194,27 +139,6 @@ def generate_launch_description():
             " ",
             "tf_prefix:=",
             tf_prefix,
-            " ",
-            "use_gripper:=", 
-            use_gripper, 
-            " ",
-            "gripper_offset_x:=", 
-            gripper_offset_x, 
-            " ",
-            "gripper_offset_y:=", 
-            gripper_offset_y, 
-            " ",
-            "gripper_offset_z:=", 
-            gripper_offset_z, 
-            " ",
-            "gripper_roll:=", 
-            gripper_roll, 
-            " ",
-            "gripper_pitch:=", 
-            gripper_pitch, 
-            " ",
-            "gripper_yaw:=", 
-            gripper_yaw,
         ]
     )
     robot_description = {

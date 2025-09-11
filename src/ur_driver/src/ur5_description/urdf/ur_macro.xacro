@@ -50,10 +50,8 @@
      - Muhammad Asif Rana
   -->
 
-  <xacro:include filename="$(find ur5_description)/urdf/inc/ur_transmissions.xacro" />
-  <xacro:include filename="$(find ur5_description)/urdf/inc/ur_common.xacro" />
-
-  <xacro:include filename="$(find ur5_description)/urdf/robotiq_arg2f_85_model_macro.xacro" />
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur_transmissions.xacro" />
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur_common.xacro" />
 
   <xacro:macro name="ur_robot" params="
     name
@@ -109,7 +107,7 @@
 
     <xacro:if value="${generate_ros2_control_tag}">
       <!-- ros2 control include -->
-      <xacro:include filename="$(find ur5_description)/urdf/ur.ros2_control.xacro" />
+      <xacro:include filename="$(find ur_description)/urdf/ur.ros2_control.xacro" />
       <!-- ros2 control instance -->
       <xacro:ur_ros2_control
         name="${name}"
@@ -460,22 +458,12 @@
       <origin xyz="0 0 0" rpy="0 ${-pi/2.0} ${-pi/2.0}" />
     </joint>
 
-    <xacro:include filename="$(find ur5_description)/urdf/robotiq_arg2f_85_model_macro.xacro"/>
-    <xacro:robotiq_arg2f_85 prefix="${tf_prefix}"/>
-
-    <!-- 连接夹爪到 flange -->
-    <joint name="${tf_prefix}flange_to_gripper" type="fixed">
-      <parent link="${tf_prefix}flange"/>
-      <child link="${tf_prefix}robotiq_arg2f_base_link"/>
-      <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
-    </joint>
-
     <!-- ROS-Industrial 'tool0' frame - all-zeros tool frame -->
     <link name="${tf_prefix}tool0"/>
-    <joint name="${tf_prefix}gripper-to-tool0" type="fixed">
+    <joint name="${tf_prefix}flange-tool0" type="fixed">
       <!-- default toolframe - X+ left, Y+ up, Z+ front -->
       <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
-      <parent link="${tf_prefix}left_inner_finger_pad"/>
+      <parent link="${tf_prefix}flange"/>
       <child link="${tf_prefix}tool0"/>
     </joint>
 
