@@ -63,22 +63,3 @@ publisher_joint_trajectory_controller:
       wrist_1_joint: [-1.6,-1.5]
       wrist_2_joint: [-0.1,0.1]
       wrist_3_joint: [-0.1,0.1]
-     
-# 添加夹爪控制器配置
-publisher_gripper_controller:
-  ros__parameters:
-    controller_name: "gripper_controller"
-    wait_sec_between_publish: 2  # 夹爪动作通常比机械臂快，可以设置更短的等待时间
-    
-    goal_names: ["open", "close", "half_open"]
-    open:
-      positions: [0.0]  # 完全打开位置
-    close:
-      positions: [0.8]  # 完全闭合位置
-    half_open:
-      positions: [0.4]  # 半开位置
-    
-    joints:
-      - gripper_joint  # 夹爪关节名称
-    
-    check_starting_point: false  # 夹爪通常不需要检查起始位置
