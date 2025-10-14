@@ -5,6 +5,7 @@
 build/
 log/
 install/
+devel/
 
 *.db3
 metadata.yaml
