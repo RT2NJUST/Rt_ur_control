@@ -10,6 +10,19 @@ ARG ROS_DISTRO=humble
 
 WORKDIR /home/${USERNAME}/Rt_ur_control/packages
 
+# 合并所有apt-get操作并清理缓存
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    sudo nautilus wget software-properties-common curl \
+    gcc git zip unzip htop libgl1 libglib2.0-0 gnupg libsm6 && \
+    # 添加fish仓库并安装
+    add-apt-repository ppa:fish-shell/release-3 -y && \
+    apt-get update && \
+    apt-get install -y fish fzf && \
+    # 清理
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # 创建用户组和用户
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
@@ -81,6 +94,12 @@ RUN apt-get update && apt-get install -y \
     ros-humble-compressed-depth-image-transport \
     ros-humble-vision-msgs 
 
+# 安装CopperliaSim依赖
+RUN apt-get update && apt-get install -y \
+    xsltproc
+
+RUN pip3 install xmlschema lxml
+
 # 安装gazebo相关依赖
 RUN apt-get update && apt-get install -y \
     lsb-release \
@@ -109,6 +128,15 @@ RUN pip3 install -U colcon-common-extensions \
 
 #切回yc-dlan
 USER yc-dlan
+
+# 安装fish插件（切换到普通用户）
+RUN curl -L https://github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | sudo tee install_omf > /dev/null && \
+    fish install_omf --noninteractive && \
+    fish -c "omf install bass" && \
+    sudo rm install_omf 
+
+# 复制fish配置
+COPY packages/fish /home/${USERNAME}/.config/fish
 
 WORKDIR /home/${USERNAME}
 

@@ -22,3 +22,7 @@ metadata.yaml
 .vscode/settings.json
 .vscode/browse.vc.db-wal
 .vscode/browse.vc.db-shm
+
+src/CoppeliaSim/
+
+src/ros2_robotiq_gripper/
